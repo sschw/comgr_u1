@@ -1,7 +1,7 @@
 #include "random_var.h"
 
 mt19937& e_rand() {
-	thread_local mt19937 e_rand(chrono::system_clock::now().time_since_epoch().count());
+	thread_local mt19937 e_rand((uint32_t) chrono::system_clock::now().time_since_epoch().count());
 	return e_rand;
 }
 

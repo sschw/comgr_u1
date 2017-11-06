@@ -11,12 +11,13 @@ int main(int argc, char **argv) {
 		Scene("cornellbox"),
 		Scene("skysphere"),
 		Scene("1024spheres"),
+		Scene("depthSpheres"),
 		Scene("cornellboxPT")
 	};
 
 	Scene& currentScene = scenes[0];
 
-	SceneRenderer renderer(currentScene, 400, 400, true, 18, false, 30, 1.0f / 22, true, 100, 4, 3);
+	SceneRenderer renderer(currentScene, 400, 400, true, 18, false, 30, 0.45f, false, 100, 4, 3);
 
 
 	bool quit = false;
@@ -54,7 +55,8 @@ int main(int argc, char **argv) {
 				cout << "- 1: cornellbox" << endl;
 				cout << "- 2: skysphere" << endl;
 				cout << "- 3: 1024spheres" << endl;
-				cout << "- 4: cornellboxPT" << endl;
+				cout << "- 4: depthspheres" << endl;
+				cout << "- 5: cornellboxPT" << endl;
 				cin >> j;
 				renderer.scene = scenes[j - 1];
 				break;

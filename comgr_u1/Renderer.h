@@ -126,7 +126,7 @@ public:
 						refVec = Vector3(u_11dist(), u_11dist(), u_11dist());
 					}
 					refVec = refVec.norm();
-					double refDot = n * refVec;
+					float refDot = n * refVec;
 					if (refDot <= 0)
 						refVec = -refVec, refDot = -refDot;
 					Vector3 col = ((((Vector3)calcColorPT(Ray(hitPointPos + refVec*0.001f, refVec), 4, noRec - 1))*refDot).multiplyElements((Vector3)p.hitColor));
