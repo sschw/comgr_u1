@@ -64,11 +64,12 @@ public:
 	}
 
 	HitPoint calcHitPoint(Ray& r) {
-		HitPoint h = { nullptr, r, -1, Color(0) };
+		HitPoint h = { nullptr, Vector3(0,0,0), r, -1, Color(0) };
 		for (const Figure* figure : scene.figures) {
 			HitPoint j = figure->intersect(r);
 			if (j.rayMultiplier >= 0 && (h.rayMultiplier == -1 || j.rayMultiplier < h.rayMultiplier)) {
 				h.figure = j.figure;
+				h.n = j.n;
 				h.rayMultiplier = j.rayMultiplier;
 				h.hitColor = j.hitColor;
 			}
@@ -78,13 +79,13 @@ public:
 
 	Color calcColor(Ray& r, Uint32 c) {
 		HitPoint p = calcHitPoint(r);
-		float ambientLight = 0.3f;
+		float ambientLight = 0.0f;
 		if (p.rayMultiplier > 0) {
 			Color color = p.hitColor;
 			if (!p.figure->emiting)
 				return color;
 			Vector3 hitPointPos = p.ray.origin + p.ray.ray*p.rayMultiplier;
-			Vector3 n = (hitPointPos - p.figure->pos).norm();
+			Vector3 n = p.n;
 
 			Vector3 i(0, 0, 0);
 
@@ -98,11 +99,13 @@ public:
 				Vector3 id = (li->diffuseLightIntensity(p.figure->diffuseInt, n, l)*shadow).multiplyElements(color);
 				Vector3 is = li->spectularLightIntensity(p.figure->specularInt, p.figure->specularReflection, n, l, (-r.ray).norm());
 				Vector3 refVec = (p.ray.ray).reflect(n);
-				i = i + li->attenuation(id, hitPointPos) + li->attenuation(is, hitPointPos);
+				i = i + li->attenuation(id, hitPointPos) +li->attenuation(is, hitPointPos);
 				if (c > 0 && p.figure->reflection > 0) {
 					Color ir = calcColor(Ray(hitPointPos + refVec*0.001f, refVec), c - 1);
-					// REFLECT CONSTANT 0.1
 					i = i + ((Vector3)ir).multiplyElements(p.figure->reflection);
+					// schlick's approximation
+					//ir = ir * (p.figure->reflection + (1 - p.figure->reflection) * powf(1 - refVec.dot(p.n), 5));
+					//i = i + ((Vector3)ir);
 				}
 			}
 			i = i + ambientLight;

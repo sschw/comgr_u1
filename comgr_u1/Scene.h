@@ -20,18 +20,18 @@ private:
 		textures.push_back(SDL_LoadBMP("texture.bmp"));
 
 		figures.insert(figures.end(), {
-			new Sphere(Vector3(-1001, 0, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FF0000),
-			new Sphere(Vector3(1001, 0, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x000000FF),
-			new Sphere(Vector3(0, 0, 1001), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
-			new Sphere(Vector3(0, -1001, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
-			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(-1001, 0, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FF0000),
+			new Sphere(Vector3(1001, 0, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x000000FF),
+			new Sphere(Vector3(0, 0, 1001), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(0, -1001, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
 			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 0.4f, 0.8f, 0.8f, 10, 0.0f, 0, textures[0]),
 			new Sphere(Vector3(0.3f, 0.4f, 0.3f), 0.6f, 0.8f, 0.8f, 10, 0.1f, 0, 0x00FFFF00)
 		});
 		light.insert(light.end(), {
-			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00111111),
+			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00FFFFFF),
 			new Light(Vector3(0.0f, -0.0f, -4.0f), 0x00FFFFFF),
-			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00111109)
+			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00555522)
 		});
 		createBVH();
 	}
@@ -39,48 +39,46 @@ private:
 		figures.insert(figures.end(), {
 			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 0.4f, 0.8f, 0.8f, 10, 0.6f, 0, 0x00AAAAAA),
 			new Sphere(Vector3(0.3f, 0.4f, 0.3f), 0.6f, 0.8f, 0.8f, 10, 0.1f, 0, 0x00AAAAAA),
-			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 4.0f, 0, "grace_probe.float", 1000, 1000),
+			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 4.0f, 1.0f, "grace_probe.float", 1000, 1000),
 		});
 		light.insert(light.end(), {
-			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00111111),
+			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00FFFFFF),
 			new Light(Vector3(0.0f, -0.0f, -4.0f), 0x00FFFFFF),
-			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00111109)
+			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00555522)
 		}); 
 		createBVH();
-		// s.insert(s.end(), { new Plane(Vector3(0, 1, 0), Vector3(0, 1, 0), 0.8f, 0.8f, 30, 0.0f, 0x00BBBBBB)});
+		figures.insert(figures.end(), { new Plane(Vector3(0, 1, 0), Vector3(0, 1, 0), 0.8f, 0.8f, 300, 0.3f, 0, 0x00FFFFFF)});
 	}
 	void init1024Spheres() {
 		for (int i = 0; i < 1024; i++)
 			figures.push_back(new Sphere(Vector3((i & 7)*0.3f - 1, ((i & 56) >> 3)*0.3f - 1, ((i & 960) >> 6)*0.5f), 0.1f, 0.8f, 0.8f, 10, 0, 0, 0x0044FF44));
 		light.insert(light.end(), {
-			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00111111),
+			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00FFFFFF),
 			new Light(Vector3(0.0f, -0.0f, -4.0f), 0x00FFFFFF),
-			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00111109)
+			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00555522)
 		});
 		createBVH();
 	}
 	void initDepthSpheres() {
 		figures.insert(figures.end(), {
-			new Sphere(Vector3(-1001, 0, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FF0000),
-			new Sphere(Vector3(1001, 0, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x000000FF),
-			new Sphere(Vector3(0, 0, 1001), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
-			new Sphere(Vector3(0, -1001, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
-			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(-1001, 0, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FF0000),
+			new Sphere(Vector3(1001, 0, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x000000FF),
+			new Sphere(Vector3(0, 0, 1001), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(0, -1001, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
+			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 0, 100, 0, 0x00FFFFFF),
 			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 0.4f, 0.8f, 0.8f, 10, 0.0f, 0, 0x0000FF),
 			new Sphere(Vector3(0.3f, 0.4f, 0.3f), 0.6f, 0.8f, 0.8f, 10, 0.1f, 0, 0x00FFFF00)
 		});
 		light.insert(light.end(), {
-			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00111111),
+			new Light(Vector3(0.0f, -0.9f, -0.6f), 0x00FFFFFF),
 			new Light(Vector3(0.0f, -0.0f, -4.0f), 0x00FFFFFF),
-			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00111109)
+			new Light(Vector3(0.0f, -0.9f, -0.7f), 0x00555522)
 		});
 		lookat = Vector3(0, 0, 0.3f);
 		createBVH();
 	}
 
 	void initCornellboxPT() {
-
-		textures.push_back(SDL_LoadBMP("texture.bmp"));
 
 		figures.insert(figures.end(), {
 			new Sphere(Vector3(-1001, 0, 0), 1000, 0.8f, 0.8f, 0, 0, 0, 0x00EE4444),

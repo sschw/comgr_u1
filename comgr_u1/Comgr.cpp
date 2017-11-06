@@ -1,13 +1,42 @@
 
 #include "SurfDrawer.h"
+#include "GradientDrawer.h"
 #include <string>
 
 using namespace std;
 
-int main(int argc, char **argv) {
+void runGradient() {
 	SDL_Window* win = SDL_CreateWindow("SDL2 COMGR Task", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALWAYS_ON_TOP);
 
-	Scene scenes[] = { 
+	SDL_Surface* surf = SDL_GetWindowSurface(win);
+
+	SDL_Event evt;
+	bool quit = false;
+	Uint32 offset = 0;
+
+	while (!quit)
+	{
+		while (SDL_PollEvent(&evt))
+		{
+			if (evt.type == SDL_QUIT)
+			{
+				quit = true;
+			}
+		}
+		if (SDL_GetTicks() % 10 == 0) {
+			offset++;
+			paintGradient(surf, offset);
+			SDL_UpdateWindowSurface(win);
+		}
+	}
+	SDL_DestroyWindow(win);
+	SDL_Quit();
+}
+
+void runCornellbox() {
+	SDL_Window* win = SDL_CreateWindow("SDL2 COMGR Task", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALWAYS_ON_TOP);
+
+	Scene scenes[] = {
 		Scene("cornellbox"),
 		Scene("skysphere"),
 		Scene("1024spheres"),
@@ -107,7 +136,7 @@ int main(int argc, char **argv) {
 				quit = true;
 			}
 			else if (evt.type == SDL_KEYDOWN) {
-				if(evt.key.keysym.sym == SDLK_F5)
+				if (evt.key.keysym.sym == SDLK_F5)
 					run(win, currentScene, renderer);
 			}
 			else if (evt.type == SDL_WINDOWEVENT && evt.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -119,5 +148,19 @@ int main(int argc, char **argv) {
 	SDL_DestroyWindow(win);
 	SDL_Quit();
 	t.join();
+}
+
+int main(int argc, char **argv) {
+	cout << "1: Show Gradient Animation \n";
+	cout << "2: Show Cornellbox" << endl;
+	int n = 0;
+	cin >> n;
+	if (n == 1) {
+		runGradient();
+	}
+	else if (n == 2) {
+		runCornellbox();
+	}
+
 	return 0;
 }

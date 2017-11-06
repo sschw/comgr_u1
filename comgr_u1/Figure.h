@@ -11,6 +11,7 @@ class VisibleFigure;
 
 struct HitPoint {
 	const VisibleFigure* figure;
+	Vector3 n;
 	const Ray& ray;
 	float rayMultiplier;
 	Color hitColor;
@@ -136,7 +137,7 @@ public:
 		float cel = ce.distance();
 		float n1 = ced*ced - (cel*cel - radius*radius);
 		if (n1 < 0)
-			return HitPoint{ nullptr, r, -1, Color(0x0) };
+			return HitPoint{ nullptr, Vector3(0,0,0), r, -1, Color(0x0) };
 		float n = sqrt(n1);
 		float l1 = -ced + n;
 		float l2 = -ced - n;
@@ -148,7 +149,7 @@ public:
 			if (ri.rayMultiplier >= 0 && (le.rayMultiplier < 0 || ri.rayMultiplier < le.rayMultiplier))
 				return ri;
 		}
-		return HitPoint{ nullptr, r, -1, Color(0x0) };
+		return HitPoint{ nullptr, Vector3(0,0,0), r, -1, Color(0x0) };
 	}
 };
 
@@ -182,11 +183,11 @@ public:
 	HitPoint intersect(const Ray& r) const {
 		float den = r.ray*n;
 		if (den == 0)
-			return HitPoint{ nullptr, r, -1, 0 };
+			return HitPoint{ nullptr, n, r, -1, 0 };
 		float d = ((pos*n) - (r.origin * n)) / den;
 		if(d > 0)
-			return HitPoint{ this, r, d, getColor(r, d) };
-		return HitPoint{ nullptr, r, -1, 0 };
+			return HitPoint{ this, n, r, d, getColor(r, d) };
+		return HitPoint{ nullptr, n, r, -1, 0 };
 
 	}
 };
@@ -209,15 +210,15 @@ public:
 		float cel = ce.distance();
 		float n1 = ced*ced - (cel*cel - radius*radius);
 		if (n1 < 0)
-			return HitPoint{ this, r, -1, Color(0x0) };
+			return HitPoint{ this, Vector3(0,0,0), r, -1, Color(0x0) };
 		float n = sqrt(n1);
 		float l1 = -ced + n;
 		float l2 = -ced - n;
 		if (l1 >= 0 && (l2 < 0 || l1 < l2))
-			return HitPoint{ this, r, l1, getColor(r, l1) };
+			return HitPoint{ this, ((r.origin + r.ray*l1) - pos).norm(), r, l1, getColor(r, l1) };
 		if (l2 >= 0 && (l1 < 0 || l2 < l1))
-			return HitPoint{ this, r, l2, getColor(r, l2) };
-		return HitPoint{ this, r, -1, Color(0x0) };
+			return HitPoint{ this, ((r.origin + r.ray*l2) - pos).norm(), r, l2, getColor(r, l2) };
+		return HitPoint{ this, Vector3(0,0,0), r, -1, Color(0x0) };
 	}
 
 	Sphere& operator=(const Sphere other) {

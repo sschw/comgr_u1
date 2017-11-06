@@ -12,6 +12,9 @@ public:
 
 	Color() : color(0,0,0) {}
 	Color(Uint32 color) : color(colorToLinearColorVector(color)) {}
+	Color(Uint32 start, Uint32 end, float step) : color(Vector3(0,0,0)) {
+		color = colorToLinearColorVector(start)*(1.0f - step) + colorToLinearColorVector(end)*step;
+	}
 	Color(Uint8 r, Uint8 g, Uint8 b) : color(srgbToLinear(r), srgbToLinear(g), srgbToLinear(b)) {}
 	Color(const Vector3& color) : color(color) {}
 
@@ -32,11 +35,11 @@ public:
 	}
 
 	float srgbToLinear(const Uint8& c) const {
-		return powf(c / 255.0f, 1/2.2f);
+		return powf(c / 255.0f, 2.2f);
 	}
 
 	Uint8 linearToSrgb(const float& c) const {
-		return (Uint8) (min(pow(c, 2.2f), 1.0f) * 255);
+		return (Uint8) (min(pow(c, 1/2.2f), 1.0f) * 255);
 	}
 
 	Color& operator=(const Color c) {

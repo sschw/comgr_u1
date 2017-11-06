@@ -30,6 +30,9 @@
     <ClCompile Include="random_var.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GradientDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random_var.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GradientDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
