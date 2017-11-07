@@ -75,7 +75,7 @@ public:
 
 	HDRRenderer(float* hdr, Uint32 w, Uint32 h) : hdr(hdr), width(w), height(h) {}
 	HDRRenderer(string hdrFile, Uint32 w, Uint32 h) : hdr(nullptr), width(w), height(h) {
-		hdr = new float[3 * (w + h*w)];
+		hdr = new float[3*h*w];
 		ifstream is(hdrFile, ios::binary | ios::in);
 		is.read(reinterpret_cast<char*>(hdr), sizeof(float) * 3 * w*h);
 		is.close();

@@ -65,7 +65,7 @@ private:
 			new Sphere(Vector3(1001, 0, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x000000FF),
 			new Sphere(Vector3(0, 0, 1001), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
 			new Sphere(Vector3(0, -1001, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
-			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 0, 100, 0, 0x00FFFFFF),
+			new Sphere(Vector3(0, 1001, 0), 1000, 0.8f, 0.8f, 100, 0, 0, 0x00FFFFFF),
 			new Sphere(Vector3(-0.6f, 0.6f, -0.6f), 0.4f, 0.8f, 0.8f, 10, 0.0f, 0, 0x0000FF),
 			new Sphere(Vector3(0.3f, 0.4f, 0.3f), 0.6f, 0.8f, 0.8f, 10, 0.1f, 0, 0x00FFFF00)
 		});

@@ -102,10 +102,10 @@ public:
 				i = i + li->attenuation(id, hitPointPos) +li->attenuation(is, hitPointPos);
 				if (c > 0 && p.figure->reflection > 0) {
 					Color ir = calcColor(Ray(hitPointPos + refVec*0.001f, refVec), c - 1);
-					i = i + ((Vector3)ir).multiplyElements(p.figure->reflection);
+					//i = i + ((Vector3)ir).multiplyElements(p.figure->reflection);
 					// schlick's approximation
-					//ir = ir * (p.figure->reflection + (1 - p.figure->reflection) * powf(1 - refVec.dot(p.n), 5));
-					//i = i + ((Vector3)ir);
+					ir = ir * (p.figure->reflection + (1 - p.figure->reflection) * powf(1 - refVec.dot(p.n), 5));
+					i = i + ((Vector3)ir);
 				}
 			}
 			i = i + ambientLight;

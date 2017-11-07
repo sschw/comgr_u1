@@ -46,7 +46,7 @@ void runCornellbox() {
 
 	Scene& currentScene = scenes[0];
 
-	SceneRenderer renderer(currentScene, 400, 400, true, 18, false, 30, 0.45f, false, 100, 4, 3);
+	SceneRenderer renderer(currentScene, 400, 400, true, 18, false, 30, 0.45f, false, 100, 4, 5);
 
 
 	bool quit = false;
