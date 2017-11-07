@@ -143,6 +143,9 @@ void runCornellbox() {
 				SDL_GetWindowSize(win, (int*) &(renderer.width), (int*) &(renderer.height));
 			}
 		}
+		if (SDL_GetTicks() % 10 == 0) {
+			SDL_UpdateWindowSurface(win);
+		}
 
 	}
 	SDL_DestroyWindow(win);
